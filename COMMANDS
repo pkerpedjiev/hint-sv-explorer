@@ -1,0 +1,2 @@
+cat data/K562_integratedBPs.txt | awk '{ if (NR > 1) { split($2,b,"_"); split($5,c,"_"); print $1 "\t" b[1] "\t" b[2] "\t" $4 "\t" c[1] "\t" c[2] }; }' > data/K562_regions.tsv
+clodius aggregate bedpe data/K562_regions.tsv

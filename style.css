@@ -1,0 +1,78 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.box {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.box .section {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.box .section.header {
+  background: #ccc;
+  flex: 0 1 auto;
+}
+
+.box .section.content {
+  display: flex;
+  flex-flow: column;
+  flex: 1 1 auto;
+  overflow-y: auto;
+}
+
+#list-and-viewer {
+  display: flex;
+  height: 100%;
+}
+
+#sv-list {
+  width: 50%;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+#development-demo {
+  width: 100%;
+  flex: 1 1 auto;
+}
+
+#higlass-blurb {
+  flex: 0 1 40px;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 12px  ;
+}
+
+#sv-viewer {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.box .section.subheader {
+  flex: 0 1 auto;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.box .section.footer {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  flex: 0 1 0px;
+}
+
+.flex-c {
+  display: flex;
+}
+
+.flex-jc-e {
+  justify-content: flex-end;
+}

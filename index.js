@@ -323,7 +323,20 @@ hglib.ChromosomeInfo(testViewConfig.views[0].chromInfoPath, function(chromInfo) 
       .append('li')
       .append('a')
       .text(function(d) {
-        return d.chrom1 + " " + d.region1 + " " + d.chrom2 + " " + d.region2;
+        const format = d3.format(".3s");
+        const region1Parts = d.region1.split('_');
+        const region2Parts = d.region2.split('_');
+
+        const region11 = format(region1Parts[0]);
+        const region12 = format(region1Parts[1]);
+
+        const region21 = format(region2Parts[0]);
+        const region22 = format(region2Parts[1]);
+
+        // console.log('region1Parts:', region11);
+
+        return `${d.chrom1}:${region11},${region12} - ${d.chrom2}:${region21},${region22}`;
+
       })
       .style('cursor', 'pointer')
       .on('click', function(d) {

@@ -316,13 +316,24 @@
 
 hglib.ChromosomeInfo(testViewConfig.views[0].chromInfoPath, function(chromInfo) {
   d3.tsv('data/K562_integratedBPs.txt', function(error, data)  {
-    var svs = d3.select('#sv-list')
-      .selectAll('li')
+    var tableRows = d3.select('#sv-list-table')
+      .selectAll('tr')
       .data(data)
       .enter()
-      .append('li')
+      .append('tr')
+
+    const markerCells = tableRows.append('td')
+    .style('outline', '0px')
+    .attr('class', 'marker');
+
+    tableRows
+      .append('td')
+      .style('border', 'none')
+      .style('padding-right', '5px')
+      .style('outline', '0px')
       .append('a')
       .text(function(d) {
+        console.log('d:', d);
         const format = d3.format(".3s");
         const region1Parts = d.region1.split('_');
         const region2Parts = d.region2.split('_');
@@ -336,7 +347,6 @@ hglib.ChromosomeInfo(testViewConfig.views[0].chromInfoPath, function(chromInfo) 
         // console.log('region1Parts:', region11);
 
         return `${d.chrom1}:${region11},${region12} - ${d.chrom2}:${region21},${region22}`;
-
       })
       .style('cursor', 'pointer')
       .on('click', function(d) {
@@ -360,6 +370,16 @@ hglib.ChromosomeInfo(testViewConfig.views[0].chromInfoPath, function(chromInfo) 
 
       });
 
+      tableRows
+      .append('td')
+      .style('padding-left', '5px')
+      .style('padding-right', '5px')
+      .style('outline', '0px')
+      .style('border', 'none')
+      .text(function(d) {
+        return d['RankProduct(p-value)'];
+      })
+
       window.hgApi.on('location', function(data) {
         const fromX = chromInfo.chrPositions[data[0]].pos + data[1];
         const toX = chromInfo.chrPositions[data[2]].pos + data[3];
@@ -367,9 +387,13 @@ hglib.ChromosomeInfo(testViewConfig.views[0].chromInfoPath, function(chromInfo) 
         const toY = chromInfo.chrPositions[data[6]].pos + data[7];
 
 
-        svs.style('background', 'transparent');
+        tableRows.style('background', (d,i) =>
+            i % 2 ? 'rgb(230,230,230)' : 'transparent'
+          )
+        markerCells.style('background', 'transparent');
 
-        const visibleSvs = svs.filter(function(d) {
+        tableRows.style('border-right', '0px')
+        const visibleSvs = tableRows.filter(function(d) {
           const region1Parts = d.region1.split('_')
           const region2Parts = d.region2.split('_');
 
@@ -391,8 +415,8 @@ hglib.ChromosomeInfo(testViewConfig.views[0].chromInfoPath, function(chromInfo) 
           return false;
         });
 
-        visibleSvs.style('background', 'yellow');
-
+        visibleSvs.select('.marker').style('background', 'yellow');
+        // visibleSvs.style('border-right', '4px solid yellow')
         //console.log('data:', data);
       }, 'view1');
     ;
